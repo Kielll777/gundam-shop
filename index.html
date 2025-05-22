@@ -5,10 +5,161 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Gundam Toys</title>
   <link rel="stylesheet" href="styles.css" />
+  <style>
+    /* Inline styles specific to burger menu and cart badge */
+    .header-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .burger {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      cursor: pointer;
+      width: 28px;
+      height: 21px;
+      gap: 4px;
+      user-select: none;
+      margin-right: 16px;
+    }
+    .burger div {
+      height: 3px;
+      background-color: #40c4ff;
+      border-radius: 2px;
+      transition: all 0.3s;
+    }
+    .burger.open div:nth-child(1) {
+      transform: rotate(45deg) translate(5px, 5px);
+    }
+    .burger.open div:nth-child(2) {
+      opacity: 0;
+    }
+    .burger.open div:nth-child(3) {
+      transform: rotate(-45deg) translate(6px, -6px);
+    }
+    nav.nav-menu {
+      position: fixed;
+      top: 0;
+      left: -240px;
+      width: 220px;
+      height: 100%;
+      background-color: #202020;
+      box-shadow: 2px 0 8px rgba(0, 0, 0, 0.7);
+      padding-top: 60px;
+      transition: left 0.3s ease-in-out;
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    nav.nav-menu.open {
+      left: 0;
+    }
+    nav.nav-menu a {
+      color: #40c4ff;
+      padding: 12px 20px;
+      font-weight: 600;
+      font-size: 1.2rem;
+      text-decoration: none;
+      border-left: 4px solid transparent;
+      transition: background-color 0.2s, border-color 0.2s;
+    }
+    nav.nav-menu a:hover {
+      background-color: #006bb3;
+      border-left-color: #82e9ff;
+    }
+    .cart-icon {
+      position: relative;
+      cursor: pointer;
+      margin-left: 16px;
+      font-size: 28px;
+      color: #40c4ff;
+      user-select: none;
+    }
+    .cart-count {
+      position: absolute;
+      top: -8px;
+      right: -10px;
+      background-color: #ff5252;
+      color: white;
+      font-weight: 700;
+      font-size: 0.8rem;
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      pointer-events: none;
+      box-shadow: 0 0 5px rgba(255, 82, 82, 0.7);
+    }
+    .card-body button.add-to-cart-btn {
+      margin-top: 12px;
+      display: inline-block;
+      background-color: #40c4ff;
+      border: none;
+      color: #121212;
+      font-weight: 600;
+      padding: 10px 15px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      width: 100%;
+      font-size: 1rem;
+      user-select: none;
+    }
+    .card-body button.add-to-cart-btn:hover {
+      background-color: #82e9ff;
+    }
+    @media (min-width: 769px) {
+      nav.nav-menu {
+        position: static;
+        flex-direction: row;
+        background: none;
+        box-shadow: none;
+        height: auto;
+        padding: 0;
+        margin-left: 20px;
+        left: 0 !important;
+        width: auto;
+        gap: 30px;
+        align-items: center;
+      }
+      .burger {
+        display: none;
+      }
+      header .header-container {
+        justify-content: center;
+      }
+    }
+  </style>
 </head>
 <body>
   <header>
-    Gundam Toys
+    <div class="header-container">
+      <div class="burger" id="burger" aria-label="Toggle menu" tabindex="0" role="button" aria-expanded="false" aria-controls="navMenu">
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+      <div class="site-title">Gundam Toys</div>
+      <nav class="nav-menu" id="navMenu" aria-label="Primary navigation">
+        <a href="#" tabindex="0">Home</a>
+        <a href="#" tabindex="0">Products</a>
+        <a href="#" tabindex="0">About</a>
+        <a href="#" tabindex="0">Contact</a>
+      </nav>
+      <div class="cart-icon" id="cartIcon" aria-label="Shopping cart with 0 items" tabindex="0" role="button">
+        <!-- Shopping cart SVG icon -->
+        <svg aria-hidden="true" focusable="false" fill="currentColor" height="28" width="28" viewBox="0 0 24 24">
+          <path d="M7 18c-1.104 0-2 .896-2 2s.896 2 2 2 2-.896 2-2-.896-2-2-2zm10 0c-1.104 0-2 .896-2 2s.896 2 2 2 2-.896 2-2-.896-2-2-2zm-12.617-3.382L5.2 16h13.158l.052-.378 1.874-8.096A1 1 0 0018.243 6H7.313l-.858-3.99A1 1 0 005.47 2H2v2h2.553l3.611 16H19v-2H7.383z"/>
+        </svg>
+        <span class="cart-count" id="cartCount">0</span>
+      </div>
+    </div>
   </header>
   <main>
     <section class="hero">
@@ -23,6 +174,7 @@
           <h2 class="card-title">RX-78-2 Gundam</h2>
           <p class="card-desc">Iconic original Gundam model kit. Perfect for beginners and collectors.</p>
           <p class="card-price">$29.99</p>
+          <button class="add-to-cart-btn" aria-label="Add RX-78-2 Gundam to cart">Add to Cart</button>
         </div>
       </article>
 
@@ -32,6 +184,7 @@
           <h2 class="card-title">MS-06 Zaku II</h2>
           <p class="card-desc">Classic mobile suit model with great articulation and authentic detail.</p>
           <p class="card-price">$34.99</p>
+          <button class="add-to-cart-btn" aria-label="Add MS-06 Zaku II to cart">Add to Cart</button>
         </div>
       </article>
 
@@ -41,6 +194,7 @@
           <h2 class="card-title">Gundam Exia</h2>
           <p class="card-desc">Highly detailed model with sleek design and poseability.</p>
           <p class="card-price">$39.99</p>
+          <button class="add-to-cart-btn" aria-label="Add Gundam Exia to cart">Add to Cart</button>
         </div>
       </article>
 
@@ -50,6 +204,7 @@
           <h2 class="card-title">Unicorn Gundam</h2>
           <p class="card-desc">Transformable model kit featuring psycho-frame illumination.</p>
           <p class="card-price">$49.99</p>
+          <button class="add-to-cart-btn" aria-label="Add Unicorn Gundam to cart">Add to Cart</button>
         </div>
       </article>
     </section>
@@ -57,5 +212,52 @@
   <footer>
     &copy; 2025 Gundam Toys. All rights reserved.
   </footer>
+
+  <script>
+    // Toggle burger menu
+    const burger = document.getElementById('burger');
+    const navMenu = document.getElementById('navMenu');
+
+    burger.addEventListener('click', () => {
+      const expanded = burger.getAttribute('aria-expanded') === 'true' || false;
+      burger.setAttribute('aria-expanded', String(!expanded));
+      burger.classList.toggle('open');
+      navMenu.classList.toggle('open');
+    });
+
+    burger.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        burger.click();
+      }
+    });
+
+    // Cart count logic
+    const cartCountElem = document.getElementById('cartCount');
+    const cartIcon = document.getElementById('cartIcon');
+    let cartCount = 0;
+
+    function updateCartCount() {
+      cartCountElem.textContent = cartCount;
+      cartIcon.setAttribute('aria-label', `Shopping cart with ${cartCount} item${cartCount !== 1 ? 's' : ''}`);
+    }
+
+    document.querySelectorAll('.add-to-cart-btn').forEach(button => {
+      button.addEventListener('click', () => {
+        cartCount++;
+        updateCartCount();
+        // Optional: show a quick confirmation or animation here
+      });
+    });
+
+    // Keyboard accessibility for cart icon if needed (e.g., show cart)
+    cartIcon.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        alert('Cart feature coming soon!');
+      }
+    });
+  </script>
 </body>
 </html>
+
